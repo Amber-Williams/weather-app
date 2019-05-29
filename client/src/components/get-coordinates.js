@@ -1,6 +1,4 @@
-export async function GetCoordinates(){
-  let coord = {}
-
+export function GetCoordinates(){
   const options = {
     enableHighAccuracy: true,
     timeout: 5000,
@@ -8,24 +6,23 @@ export async function GetCoordinates(){
   };
   
   function success(pos) {
-    //sets these coordinates into redux state
     const crd = pos.coords;
     console.log('Your current position is:');
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);
     console.log(`More or less ${crd.accuracy} meters.`);
-    
-    coord = {
-      latitude: crd.latitude,
-      longitude: crd.longitude
-    }
+
+    //sets these coordinates into redux state
+    sessionStorage.setItem('lat:long', `${crd.latitude}:${crd.longitude}`);
   };
   
   function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   };
   
-  await navigator.geolocation.getCurrentPosition(success, error, options);
-  
-  return coord;
+  if (navigator.geolocation) { // Supported
+    navigator.geolocation.watchPosition(success, error, options);
+  } else { // Not supported
+	  alert("Oops! This browser does not support HTML Geolocation.");
+  }
 }

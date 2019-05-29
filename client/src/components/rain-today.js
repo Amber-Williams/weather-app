@@ -12,12 +12,14 @@ class RainToday extends Component {
 
   componentDidMount() {
     this.testAPI();
+    console.log(sessionStorage.getItem('lat:long'))
+  }
+
+  componentWillMount(){
+    GetCoordinates.GetCoordinates();
   }
 
   render() {
-    GetCoordinates.GetCoordinates().then(function(value) {
-      console.log(value);
-    });
     return (
       <div>
         RainToday here
