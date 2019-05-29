@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import GetCoordinates from './get-coordinates';
+import * as GetCoordinates from './get-coordinates';
 
 class RainToday extends Component {
 
@@ -15,10 +15,12 @@ class RainToday extends Component {
   }
 
   render() {
+    GetCoordinates.GetCoordinates().then(function(value) {
+      console.log(value);
+    });
     return (
       <div>
         RainToday here
-        <GetCoordinates/>
       </div>
     )
   }
